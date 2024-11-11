@@ -1,0 +1,30 @@
+buildscript {
+    repositories {
+        google()  // تأكد من إضافة هذا السطر
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.0.0'  // تأكد من استخدام النسخة المتوافقة
+        classpath 'com.google.gms:google-services:4.4.2'  // هذه هي الإضافة المطلوبة لربط Firebase
+    }
+}
+
+allprojects {
+    repositories {
+        google()  // تأكد من وجود هذه السطور لتفعيل الاتصال بمخازن Google
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
